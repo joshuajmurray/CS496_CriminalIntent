@@ -24,9 +24,11 @@ import java.util.List;
 
 public class CrimeListFragment extends Fragment {
 
+    private static final  String SAVED_SUBTITEL_VISIBLE = "subtitle";
+
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
-    private Boolean mSubtitleVisible = false;
+    private Boolean mSubtitleVisible = false;//<-- this is different from the book code but had to init the var for the code to work..
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,10 @@ public class CrimeListFragment extends Fragment {
         mCrimeRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        if(savedInstanceState != null) {
+            mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITEL_VISIBLE);
+        }
+
         updateUI();
 
         return view;
@@ -50,6 +56,12 @@ public class CrimeListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(SAVED_SUBTITEL_VISIBLE, mSubtitleVisible);
     }
 
     @Override
@@ -108,6 +120,8 @@ public class CrimeListFragment extends Fragment {
         } else {
             mAdapter.notifyDataSetChanged();
         }
+
+        updateSubtitle();
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
