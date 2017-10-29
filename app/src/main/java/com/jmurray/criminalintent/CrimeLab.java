@@ -12,6 +12,10 @@ import java.util.UUID;
 public class CrimeLab {
     private static CrimeLab sCrimeLab;
 
+    public void addCrime(Crime c) {
+        mCrimes.add(c);
+    }
+
     private List<Crime> mCrimes;
 
     public static CrimeLab get(Context context) {
@@ -23,12 +27,6 @@ public class CrimeLab {
 
     private CrimeLab(Context context) {
         mCrimes = new ArrayList<>();
-        for(int i = 0; i < 100; i++) {
-            Crime crime = new Crime();
-            crime.setTitle("Crime #" + i);
-            crime.setSolved(i % 2 == 0);//every other
-            mCrimes.add(crime);
-        }
     }
 
     public List<Crime> getCrimes() {
