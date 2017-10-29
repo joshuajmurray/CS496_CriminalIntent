@@ -16,6 +16,10 @@ public class CrimeLab {
         mCrimes.add(c);
     }
 
+    public void deleteCrime(int current) {
+        mCrimes.remove(current);
+    }
+
     private List<Crime> mCrimes;
 
     public static CrimeLab get(Context context) {
