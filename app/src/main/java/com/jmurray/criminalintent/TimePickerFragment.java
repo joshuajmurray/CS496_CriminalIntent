@@ -10,6 +10,8 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TimePicker;
+
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -20,16 +22,16 @@ import java.util.GregorianCalendar;
 
 public class TimePickerFragment extends DialogFragment {
 
-    public static final String EXTRA_DATE =
-            "com.jmurray.criminalintent.date";
+    public static final String EXTRA_TIME =
+            "com.jmurray.criminalintent.time";
 
-    private static final String ARG_DATE = "date";
+    private static final String ARG_TIME = "time";
 
     private TimePicker mTimePicker;
 
     public static TimePickerFragment newInstance(Date date) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_DATE, date);
+        args.putSerializable(ARG_TIME, date);
 
         TimePickerFragment fragment = new TimePickerFragment();
         fragment.setArguments(args);
@@ -38,18 +40,15 @@ public class TimePickerFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Date date = (Date) getArguments().getSerializable(ARG_DATE);
+        Date date = (Date) getArguments().getSerializable(ARG_TIME);
 
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR);
-        int minute = calendar.get(Calendar.MINUTE);
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
 
         View v = LayoutInflater.from(getActivity())
                 .inflate(R.layout.dialog_time, null);
 
         mTimePicker = (TimePicker) v.findViewById(R.id.dialog_time_picker);
-        mTimePicker.setHour(hour);
-        mTimePicker.setMinute(minute);
 
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
@@ -58,15 +57,9 @@ public class TimePickerFragment extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                int year = 2017;
-                                int month = 10;
-                                int day = 27;
-                                int hour = mTimePicker.getHour();
-                                int minute = mTimePicker.getMinute();
-                                Calendar calendar = new GregorianCalendar();
-                                Date date = new Date();
-                                calendar.set(year, month, day, hour, minute);
-
+                                calendar.set(Calendar.HOUR_OF_DAY, mTimePicker.getHour());
+                                calendar.set(Calendar.MINUTE, mTimePicker.getMinute());
+                                Date date = calendar.getTime();
                                 sendResult(Activity.RESULT_OK, date);
                             }
                         })
@@ -79,7 +72,7 @@ public class TimePickerFragment extends DialogFragment {
         }
 
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_DATE, date);
+        intent.putExtra(EXTRA_TIME, date);
 
         getTargetFragment()
                 .onActivityResult(getTargetRequestCode(), resultCode, intent);

@@ -34,8 +34,16 @@ public class Crime {
         return mDate;
     }
 
+    public String getDateOnly() {
+        return android.text.format.DateFormat.format("EEE, MMM d yyyy", mDate).toString();
+    }
+
     public void setDate(Date date) {
         mDate = date;
+    }
+
+    public String getTime() {
+        return android.text.format.DateFormat.format("hh:mm a", mDate).toString();
     }
 
     public boolean isSolved() {
