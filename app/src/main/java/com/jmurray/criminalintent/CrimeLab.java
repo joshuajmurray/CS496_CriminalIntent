@@ -16,8 +16,8 @@ public class CrimeLab {
         mCrimes.add(c);
     }
 
-    public void deleteCrime(int current) {
-        mCrimes.remove(current);
+    public void deleteCrime(UUID current) {
+        mCrimes.remove(getCrime(current));//this isn't working... ?!!??!
     }
 
     private List<Crime> mCrimes;

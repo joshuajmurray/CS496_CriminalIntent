@@ -100,9 +100,6 @@ public class CrimeListFragment extends Fragment {
                         .newIntent(getActivity(), crime.getID());
                 startActivity(intent);
                 return true;
-            case R.id.delete_crime:
-                CrimeLab.get(getActivity()).deleteCrime(0);//need to pass the current crime id to this method
-                return true;
             case R.id.show_subtitle:
                 mSubtitleVisible = !mSubtitleVisible;
                 getActivity().invalidateOptionsMenu();
