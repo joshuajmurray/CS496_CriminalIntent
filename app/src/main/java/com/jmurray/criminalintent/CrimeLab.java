@@ -1,8 +1,6 @@
 package com.jmurray.criminalintent;
 
 import android.content.Context;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +17,11 @@ public class CrimeLab {
     }
 
     public void deleteCrime(UUID current) {
-       mCrimes.remove(getCrime(current));//this isn't working... ?!!??!
+        for(int i = 0;i < mCrimes.size();i++){
+            if(mCrimes.get(i).getID() == current) {
+                mCrimes.remove(i);
+            }
+        }
     }
 
     private List<Crime> mCrimes;
