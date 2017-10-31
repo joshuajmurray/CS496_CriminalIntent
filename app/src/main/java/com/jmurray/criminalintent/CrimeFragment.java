@@ -65,6 +65,7 @@ public class CrimeFragment extends Fragment {
             case R.id.delete_crime:
                 UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
                 CrimeLab.get(getActivity()).deleteCrime(crimeId);
+                getActivity().finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
